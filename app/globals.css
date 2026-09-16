@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #000000;
+  --color-steel: #8e9295;
+  --color-silver: #c9cdcf;
+  --color-bright: #f2f3f4;
+  --color-champagne: #c0a16b;
+  --color-hair: rgb(201 205 207 / 0.18);
+  --color-hairsoft: rgb(201 205 207 / 0.09);
+
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-display: var(--font-bodoni), Georgia, serif;
+}
+
+:root {
+  --sheen: linear-gradient(100deg, #8e9295 0%, #edeff0 26%, #ffffff 34%, #b9bec1 48%, #8e9295 70%, #d6dadc 100%);
+}
+
+html {
+  background: var(--color-void);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-silver);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+::selection { background: var(--color-silver); color: #000; }
+
+:focus-visible { outline: 1px solid var(--color-champagne); outline-offset: 4px; }
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+  background: var(--sheen);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.shell { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* climb states, toggled from the scroll handler */
+.mayn-stop .ring { opacity: 0; transition: opacity 0.5s ease; }
+.mayn-stop.lit .ring { opacity: 0.45; }
+.mayn-stop .dot { transition: fill 0.4s ease, stroke 0.4s ease; }
+.mayn-stop.lit .dot { fill: var(--color-champagne); stroke: var(--color-champagne); }
+.mayn-stage.lit .n { color: var(--color-champagne); }
+.mayn-stage.lit .t { color: var(--color-bright); }
+
+/* lightning across the monogram */
+.mayn-bolt {
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  -webkit-mask-image: url("/assets/mark.png");
+  mask-image: url("/assets/mark.png");
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  background: linear-gradient(112deg, transparent 24%, rgb(176 222 255 / 0.85) 41%, #fff 50%, rgb(150 208 255 / 0.8) 59%, transparent 78%);
+  background-size: 260% 100%;
+  background-repeat: no-repeat;
+}
+.mayn-strike .mayn-bolt { animation: mayn-flash 0.72s linear 1; }
+.mayn-strike img { animation: mayn-glow 0.72s linear 1; }
+
+@keyframes mayn-flash {
+  0% { opacity: 0; background-position: 165% 0; }
+  7% { opacity: 1; }
+  15% { opacity: 0.1; }
+  27% { opacity: 0.88; }
+  39% { opacity: 0.06; }
+  54% { opacity: 0.55; }
+  72% { opacity: 0.14; }
+  100% { opacity: 0; background-position: -65% 0; }
+}
+@keyframes mayn-glow {
+  0%, 15%, 39%, 100% { filter: none; }
+  7% { filter: drop-shadow(0 0 7px rgb(158 212 255 / 0.85)) brightness(1.5); }
+  27% { filter: drop-shadow(0 0 6px rgb(158 212 255 / 0.7)) brightness(1.35); }
+  54% { filter: drop-shadow(0 0 4px rgb(158 212 255 / 0.5)) brightness(1.2); }
+}
