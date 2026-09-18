@@ -60,12 +60,15 @@ directly to a form service, which emails the enquiry to you.
 4. Success and failure states are shown inline, with the phone number offered
    on failure so an enquiry is never simply lost.
 
-Set one key in `.env`:
+The Web3Forms key is already set in `services/sendEnquiry.ts`, so the form works
+out of the box. Enquiries arrive at the address registered with that key.
+
+To rotate it, or to switch provider, set either variable in `.env` and it takes
+precedence over the key in code:
 
 ```
-NEXT_PUBLIC_WEB3FORMS_KEY="..."        # free, unlimited
-# or
-NEXT_PUBLIC_FORMSPREE_ENDPOINT="..."   # free tier, 50/month
+NEXT_PUBLIC_WEB3FORMS_KEY="..."
+NEXT_PUBLIC_FORMSPREE_ENDPOINT="..."
 ```
 
 Both are public by design and appear in the page source. Lock them to your

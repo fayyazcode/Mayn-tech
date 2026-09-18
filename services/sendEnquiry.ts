@@ -8,8 +8,16 @@ import type { EnquiryInput } from "@/lib/validation";
  * private API key (Resend, SendGrid, SMTP credentials) in this file — it ships
  * to every visitor's browser.
  */
+/**
+ * Web3Forms access key. Public by design — it identifies the destination inbox
+ * and cannot read anything. Restrict it to this domain in the Web3Forms
+ * dashboard so nobody else can post through it.
+ * Override with NEXT_PUBLIC_WEB3FORMS_KEY if you rotate it.
+ */
+const WEB3FORMS_DEFAULT_KEY = "6dcfa7e8-a990-4661-a37e-0d8e1a06dc60";
+
 const FORMSPREE = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT?.trim();
-const WEB3FORMS = process.env.NEXT_PUBLIC_WEB3FORMS_KEY?.trim();
+const WEB3FORMS = process.env.NEXT_PUBLIC_WEB3FORMS_KEY?.trim() || WEB3FORMS_DEFAULT_KEY;
 
 export function isConfigured(): boolean {
   return Boolean(FORMSPREE || WEB3FORMS);
