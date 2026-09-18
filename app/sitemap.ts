@@ -1,4 +1,7 @@
 import type { MetadataRoute } from "next";
+
+// required so these still generate under `output: export`
+export const dynamic = "force-static";
 import { articles } from "@/lib/content";
 import { site } from "@/lib/site";
 

@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { SubmitButton } from "@/components/ui/Button";
 import { services } from "@/lib/content";
+import { enquirySchema } from "@/lib/validation";
+import { sendEnquiry } from "@/services/sendEnquiry";
 import type { FormState } from "@/types";
 
 const field =
@@ -15,29 +17,31 @@ export function ContactForm() {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
-    setState({ status: "submitting" });
+    const raw = Object.fromEntries(new FormData(form).entries());
 
-    try {
-      const response = await fetch("/api/enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const body = await response.json();
-
-      if (!response.ok) {
-        setState({ status: "error", message: body.message ?? "That did not send.", fieldErrors: body.fieldErrors });
-        return;
-      }
-      form.reset();
-      setState({ status: "success", message: body.message });
-    } catch {
+    // validated here because there is no server to validate it again
+    const parsed = enquirySchema.safeParse(raw);
+    if (!parsed.success) {
       setState({
         status: "error",
-        message: "No connection to the server. Please email support@mayntechnologiesllc.com or call (224) 800-1175.",
+        message: "Check the highlighted fields.",
+        fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
       });
+      return;
     }
+
+    // honeypot filled means a bot: pretend it worked, send nothing
+    if (parsed.data.website) {
+      form.reset();
+      setState({ status: "success", message: "Thank you." });
+      return;
+    }
+
+    setState({ status: "submitting" });
+    const result = await sendEnquiry(parsed.data);
+
+    if (result.ok) form.reset();
+    setState(result.ok ? { status: "success", message: result.message } : { status: "error", message: result.message });
   }
 
   const errors = state.status === "error" ? state.fieldErrors : undefined;
@@ -50,7 +54,7 @@ export function ContactForm() {
         <Field label="Company" name="company" autoComplete="organization" error={errors?.company?.[0]} />
         <label className="mb-6 block">
           <span className="mb-2 block text-[0.84rem] text-steel">What do you need?</span>
-          <select name="service" defaultValue={services[0].title} className={`${field} appearance-none cursor-pointer`}>
+          <select name="service" defaultValue={services[0].title} className={`${field} cursor-pointer appearance-none`}>
             {services.map((s) => (
               <option key={s.slug} value={s.title} className="bg-[#0d0d0d]">{s.title}</option>
             ))}
@@ -65,7 +69,6 @@ export function ContactForm() {
         {errors?.message?.[0] && <span className="mt-2 block text-[0.82rem] text-champagne">{errors.message[0]}</span>}
       </label>
 
-      {/* honeypot: hidden from people, irresistible to bots */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute left-[-9999px]" />
 
       <SubmitButton disabled={state.status === "submitting"}>
@@ -75,7 +78,7 @@ export function ContactForm() {
       <AnimatePresence mode="wait">
         {(state.status === "success" || state.status === "error") && (
           <motion.p
-            key={state.status}
+            key={state.message}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
