@@ -62,35 +62,35 @@ export function Climb() {
     <div ref={root} className="mt-[clamp(36px,4.6vw,64px)]">
       <svg viewBox="0 0 1200 470" className="block h-auto w-full overflow-visible" role="img"
            aria-label="Four stages of work, drawn as a climb from identity to measurable growth.">
-        <g aria-hidden className="fill-silver opacity-40">
+        <g aria-hidden className="fill-body opacity-40">
           {[[140, 70, 1.6], [330, 40, 1.2], [470, 112, 1.7], [690, 58, 1.3], [880, 120, 1.5], [1010, 42, 1.2], [1150, 86, 1.6]].map(
             ([cx, cy, r], i) => <circle key={i} cx={cx} cy={cy} r={r} />,
           )}
         </g>
         <path d={`${RIDGE} L1140 440 L60 440 Z`} fill="rgb(201 205 207 / 0.05)" />
         <path d={RIDGE} fill="none" stroke="rgb(201 205 207 / 0.18)" strokeWidth={2} />
-        <path data-ridge d={RIDGE} fill="none" stroke="var(--color-silver)" strokeWidth={3}
+        <path data-ridge d={RIDGE} fill="none" stroke="var(--color-body)" strokeWidth={3}
               strokeLinejoin="round" strokeLinecap="round" style={{ filter: "drop-shadow(0 0 6px rgb(201 205 207 / 0.35))" }} />
         {STOPS.map((stop, i) => (
           <g key={i} data-stop={i} className="mayn-stop">
-            <circle cx={stop.x} cy={stop.y} r={15} className="ring" fill="none" stroke="var(--color-champagne)" strokeWidth={1.5} />
+            <circle cx={stop.x} cy={stop.y} r={15} className="ring" fill="none" stroke="var(--color-accent)" strokeWidth={1.5} />
             <circle cx={stop.x} cy={stop.y} r={7} className="dot" fill="#000" stroke="rgb(201 205 207 / 0.18)" strokeWidth={2} />
           </g>
         ))}
         <g data-climber style={{ opacity: 0 }}>
-          <circle r={17} fill="var(--color-champagne)" opacity={0.22} />
-          <circle r={6.5} fill="var(--color-bright)" />
+          <circle r={17} fill="var(--color-accent)" opacity={0.22} />
+          <circle r={6.5} fill="var(--color-ink)" />
         </g>
       </svg>
 
-      <ol className="mt-6 grid border-t border-hair sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="mt-6 grid border-t border-line sm:grid-cols-2 lg:grid-cols-4">
         {climbStages.map((stage, i) => (
           <li key={stage.n} data-stop={i}
-              className="mayn-stage border-b border-hairsoft py-5 pr-6 lg:border-b-0 lg:border-r lg:last:border-r-0 lg:[&:not(:first-child)]:pl-6">
-            <span className="n block font-[family-name:var(--font-bodoni)] text-[1.05rem] text-steel transition-colors duration-500">
+              className="mayn-stage min-w-0 border-b border-linesoft py-5 sm:px-5 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+            <span className="n block font-[family-name:var(--font-bodoni)] text-[1.05rem] text-muted transition-colors duration-500">
               {stage.n}
             </span>
-            <span className="t mt-1.5 block text-[0.94rem] text-steel transition-colors duration-500">{stage.title}</span>
+            <span className="t mt-1.5 block text-[0.94rem] text-muted transition-colors duration-500">{stage.title}</span>
           </li>
         ))}
       </ol>

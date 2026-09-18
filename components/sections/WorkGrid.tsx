@@ -28,8 +28,8 @@ export function WorkGrid({ limit }: { limit?: number }) {
               aria-pressed={filter === sector}
               className={`rounded-full border px-5 py-2.5 text-[0.87rem] transition-colors ${
                 filter === sector
-                  ? "border-bright bg-bright text-void"
-                  : "border-hair text-steel hover:border-silver hover:text-bright"
+                  ? "border-ink bg-ink text-surface"
+                  : "border-line text-muted hover:border-body hover:text-ink"
               }`}
             >
               {sector}
@@ -47,13 +47,13 @@ export function WorkGrid({ limit }: { limit?: number }) {
               initial={reduced ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduced ? undefined : { opacity: 0, y: -8 }}
-              transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
+              transition={{ duration: 0.7, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block overflow-hidden rounded border border-hairsoft shadow-[0_20px_44px_rgba(0,0,0,.55)] transition-[transform,border-color] duration-300 hover:-translate-y-1 hover:border-silver"
+                className="glass group block !p-2"
               >
                 <Image
                   src={project.image}
@@ -63,14 +63,14 @@ export function WorkGrid({ limit }: { limit?: number }) {
                   className="block w-full"
                 />
               </a>
-              <h3 className="mt-5 font-[family-name:var(--font-bodoni)] text-[1.32rem] text-bright">{project.name}</h3>
-              <p className="mt-1.5 text-[0.84rem] text-champagne">{project.kind}</p>
-              <p className="mt-2.5 max-w-[44ch] text-[0.92rem] text-steel">{project.note}</p>
+              <h3 className="mt-5 font-[family-name:var(--font-bodoni)] text-[1.32rem] text-ink">{project.name}</h3>
+              <p className="mt-1.5 text-[0.84rem] text-accent">{project.kind}</p>
+              <p className="mt-2.5 max-w-[44ch] text-[0.92rem] text-muted">{project.note}</p>
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3.5 inline-block border-b border-hair pb-1 text-[0.86rem] text-silver transition-colors hover:border-champagne hover:text-champagne"
+                className="mt-3.5 inline-block border-b border-line pb-1 text-[0.86rem] text-body transition-colors hover:border-accent hover:text-accent"
               >
                 Visit the live site
               </a>

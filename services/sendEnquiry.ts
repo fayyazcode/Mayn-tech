@@ -63,6 +63,8 @@ async function viaFormspree(input: EnquiryInput) {
       email: input.email,
       company: input.company || "—",
       service: input.service,
+      budget: input.budget || "Not given",
+      timeline: input.timeline || "Not given",
       message: input.message,
       _subject: subjectLine(input),
       _replyto: input.email,
@@ -83,6 +85,8 @@ async function viaWeb3Forms(input: EnquiryInput) {
       email: input.email,
       company: input.company || "—",
       service: input.service,
+      budget: input.budget || "Not given",
+      timeline: input.timeline || "Not given",
       message: input.message,
     }),
   });

@@ -46,10 +46,10 @@ export default async function ArticlePage({ params }: Params) {
 
       <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
         <article className="max-w-[70ch]">
-          <p className="mb-6 text-[0.82rem] text-steel">
+          <p className="mb-6 text-[0.82rem] text-muted">
             <span>{article.tag}</span>
-            <span className="ml-3.5 border-l border-hair pl-3.5">{article.date}</span>
-            <span className="ml-3.5 border-l border-hair pl-3.5">{article.readingTime} read</span>
+            <span className="ml-3.5 border-l border-line pl-3.5">{article.date}</span>
+            <span className="ml-3.5 border-l border-line pl-3.5">{article.readingTime} read</span>
           </p>
           <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">{article.title}</h1>
 
@@ -59,12 +59,12 @@ export default async function ArticlePage({ params }: Params) {
                 {block.heading && (
                   <h2 className="display mb-3.5 mt-9 text-[clamp(1.2rem,1.7vw,1.45rem)] leading-tight">{block.heading}</h2>
                 )}
-                <p className="text-[1.02rem] leading-[1.72] text-steel">{block.text}</p>
+                <p className="text-[1.02rem] leading-[1.72] text-muted">{block.text}</p>
               </div>
             ))}
           </div>
 
-          <Link href="/insights" className="mt-11 inline-block border-t border-hairsoft pt-5 text-[0.9rem] text-steel hover:text-bright">
+          <Link href="/insights" className="mt-11 inline-block border-t border-linesoft pt-5 text-[0.9rem] text-muted hover:text-ink">
             All insights
           </Link>
         </article>

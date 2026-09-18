@@ -1,37 +1,72 @@
 @import "tailwindcss";
 
+/*
+ * Tokens are roles, not colours. Each maps to a runtime variable so the whole
+ * site flips between themes without a single component knowing about it.
+ */
 @theme {
-  --color-void: #000000;
-  --color-steel: #8e9295;
-  --color-silver: #c9cdcf;
-  --color-bright: #f2f3f4;
-  --color-champagne: #c0a16b;
-  --color-hair: rgb(201 205 207 / 0.18);
-  --color-hairsoft: rgb(201 205 207 / 0.09);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-linesoft: var(--line-soft);
+  --color-accent: var(--accent);
 
   --font-sans: var(--font-archivo), system-ui, sans-serif;
   --font-display: var(--font-bodoni), Georgia, serif;
 }
 
-:root {
+/* dark is the brand default */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #000000;
+  --ink: #f2f3f4;
+  --body: #c9cdcf;
+  --muted: #8e9295;
+  --line: rgb(201 205 207 / 0.18);
+  --line-soft: rgb(201 205 207 / 0.09);
+  --accent: #c0a16b;
   --sheen: linear-gradient(100deg, #8e9295 0%, #edeff0 26%, #ffffff 34%, #b9bec1 48%, #8e9295 70%, #d6dadc 100%);
+  --logo-filter: none;
+  --scrim-strong: rgb(0 0 0 / 0.62);
+  --scrim-soft: rgb(0 0 0 / 0.12);
+  --scrim-edge: rgb(0 0 0 / 0.5);
+}
+
+/* paper, not plain white: warm off-white keeps the silver palette from going cold */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface: #f6f5f2;
+  --ink: #0d0e10;
+  --body: #34383c;
+  --muted: #6c7176;
+  --line: rgb(13 14 16 / 0.16);
+  --line-soft: rgb(13 14 16 / 0.08);
+  --accent: #8a6a2f;
+  --sheen: linear-gradient(100deg, #4a4f54 0%, #17191c 26%, #0d0e10 34%, #3a3f44 48%, #4a4f54 70%, #24272b 100%);
+  --logo-filter: brightness(0.28) contrast(1.15);
+  --scrim-strong: rgb(246 245 242 / 0.55);
+  --scrim-soft: rgb(246 245 242 / 0.08);
+  --scrim-edge: rgb(246 245 242 / 0.45);
 }
 
 html {
-  background: var(--color-void);
+  background: var(--surface);
   -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--color-void);
-  color: var(--color-silver);
+  background: var(--surface);
+  color: var(--body);
   font-family: var(--font-sans);
   line-height: 1.6;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-::selection { background: var(--color-silver); color: #000; }
-
-:focus-visible { outline: 1px solid var(--color-champagne); outline-offset: 4px; }
+::selection { background: var(--ink); color: var(--surface); }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 
 .display {
   font-family: var(--font-display);
@@ -46,26 +81,29 @@ body {
 
 .shell { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 64px); }
 
+/* the logo is greyscale, so one filter carries it onto a light ground */
+.logo-img { filter: var(--logo-filter); }
+
+/* hero photograph dissolves into whichever surface is active */
+.hero-scrim {
+  background:
+    linear-gradient(to bottom, var(--scrim-strong) 0, var(--scrim-soft) 14%, transparent 26%, transparent 74%,
+      color-mix(in srgb, var(--surface) 55%, transparent) 90%, var(--surface) 100%),
+    linear-gradient(to right, var(--scrim-edge), transparent 22%, transparent 78%, var(--scrim-edge));
+}
+
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 /* climb states, toggled from the scroll handler */
 .mayn-stop .ring { opacity: 0; transition: opacity 0.5s ease; }
 .mayn-stop.lit .ring { opacity: 0.45; }
 .mayn-stop .dot { transition: fill 0.4s ease, stroke 0.4s ease; }
-.mayn-stop.lit .dot { fill: var(--color-champagne); stroke: var(--color-champagne); }
-.mayn-stage.lit .n { color: var(--color-champagne); }
-.mayn-stage.lit .t { color: var(--color-bright); }
+.mayn-stop.lit .dot { fill: var(--accent); stroke: var(--accent); }
+.mayn-stage.lit .n { color: var(--accent); }
+.mayn-stage.lit .t { color: var(--ink); }
 
 /* lightning across the monogram */
 .mayn-bolt {
@@ -83,6 +121,7 @@ html.lenis, html.lenis body { height: auto; }
   background-size: 260% 100%;
   background-repeat: no-repeat;
 }
+:root[data-theme="light"] .mayn-bolt { mix-blend-mode: multiply; background: linear-gradient(112deg, transparent 24%, rgb(90 130 170 / 0.55) 41%, rgb(20 30 45 / 0.75) 50%, rgb(90 130 170 / 0.5) 59%, transparent 78%); }
 .mayn-strike .mayn-bolt { animation: mayn-flash 0.72s linear 1; }
 .mayn-strike img { animation: mayn-glow 0.72s linear 1; }
 
@@ -97,8 +136,164 @@ html.lenis, html.lenis body { height: auto; }
   100% { opacity: 0; background-position: -65% 0; }
 }
 @keyframes mayn-glow {
-  0%, 15%, 39%, 100% { filter: none; }
-  7% { filter: drop-shadow(0 0 7px rgb(158 212 255 / 0.85)) brightness(1.5); }
-  27% { filter: drop-shadow(0 0 6px rgb(158 212 255 / 0.7)) brightness(1.35); }
-  54% { filter: drop-shadow(0 0 4px rgb(158 212 255 / 0.5)) brightness(1.2); }
+  0%, 15%, 39%, 100% { filter: var(--logo-filter); }
+  7% { filter: var(--logo-filter) drop-shadow(0 0 7px rgb(158 212 255 / 0.85)) brightness(1.5); }
+  27% { filter: var(--logo-filter) drop-shadow(0 0 6px rgb(158 212 255 / 0.7)) brightness(1.35); }
+  54% { filter: var(--logo-filter) drop-shadow(0 0 4px rgb(158 212 255 / 0.5)) brightness(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Glass surfaces
+   Translucent fill, blurred backdrop, a gradient hairline for the
+   edge, and a pointer-tracked sheen. Tuned separately per theme so
+   the light version reads as frosted paper, not grey mud.
+   --------------------------------------------------------------- */
+.glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: clamp(24px, 2.6vw, 34px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.45s ease;
+}
+
+/* gradient border, drawn as a masked ring so it survives the blur */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--glass-edge);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    transparent 62%
+  );
+}
+
+.glass:hover { transform: translateY(-3px); box-shadow: var(--glass-shadow-hover); }
+.glass:hover .glass-sheen { opacity: 1; }
+
+.glass-tilt {
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+.glass-tilt:hover {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px);
+}
+
+:root, :root[data-theme="dark"] {
+  --glass-bg: linear-gradient(150deg, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0.022));
+  --glass-edge: linear-gradient(150deg, rgb(255 255 255 / 0.32), rgb(255 255 255 / 0.05) 42%, rgb(255 255 255 / 0.18));
+  --glass-shadow: 0 18px 46px rgb(0 0 0 / 0.5);
+  --glass-shadow-hover: 0 26px 60px rgb(0 0 0 / 0.62);
+  --aurora-a: rgb(120 150 190 / 0.16);
+  --aurora-b: rgb(192 161 107 / 0.13);
+}
+
+:root[data-theme="light"] {
+  --glass-bg: linear-gradient(150deg, rgb(255 255 255 / 0.78), rgb(255 255 255 / 0.42));
+  --glass-edge: linear-gradient(150deg, rgb(13 14 16 / 0.16), rgb(13 14 16 / 0.04) 42%, rgb(13 14 16 / 0.1));
+  --glass-shadow: 0 16px 38px rgb(13 14 16 / 0.09);
+  --glass-shadow-hover: 0 24px 52px rgb(13 14 16 / 0.14);
+  --aurora-a: rgb(120 150 190 / 0.2);
+  --aurora-b: rgb(138 106 47 / 0.14);
+}
+
+/* ---------------------------------------------------------------
+   Aurora: two slow blooms, driven by custom properties from JS
+   --------------------------------------------------------------- */
+.aurora {
+  background:
+    radial-gradient(42vw 34vw at calc(22% + var(--ax, 0%)) calc(18% + var(--ay, 0%)), var(--aurora-a), transparent 68%),
+    radial-gradient(38vw 30vw at calc(78% + var(--bx, 0%)) calc(72% + var(--by, 0%)), var(--aurora-b), transparent 66%);
+  filter: blur(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass:hover { transform: none; }
+  .glass-tilt, .glass-tilt:hover { transform: none; }
+}
+
+/* ---------------------------------------------------------------
+   Overflow guards
+   A single element wider than the viewport gives the whole page a
+   horizontal scrollbar, which is invisible on desktop and obvious
+   on a phone. These stop it at the source.
+   --------------------------------------------------------------- */
+html, body { overflow-x: clip; max-width: 100%; }
+
+/* grid and flex children default to min-width:auto, which refuses to shrink
+   below their content and pushes the container wide. */
+.shell > *, .shell * > .grid > * { min-width: 0; }
+
+/* long unbroken strings (URLs, emails) must not set the column width */
+p, li, h1, h2, h3, blockquote, address { overflow-wrap: break-word; }
+
+/* page hero: a soft highlight that follows the pointer */
+.page-hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--px, 30%) var(--py, 40%),
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.page-hero:hover .page-hero-glow { opacity: 1; }
+
+
+/* ---------------------------------------------------------------
+   Animation start states
+   Declared in CSS, not written by JS, so the server HTML and the
+   first client render are identical. GSAP only ever animates *to*
+   the finished state, and only after hydration. Gated on .js so
+   nothing is invisible if scripting fails.
+   --------------------------------------------------------------- */
+.js [data-anim="line"] { transform: translateY(118%); opacity: 0; }
+.js [data-anim="fade"] { transform: translateY(16px); opacity: 0; }
+.js [data-anim="rule"] { transform: scaleX(0); transform-origin: left center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-anim] { transform: none !important; opacity: 1 !important; }
+}
+
+.js .display.will-reveal { opacity: 0; transform: translateY(26px); }
+.js .display.will-reveal.revealed {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
 }

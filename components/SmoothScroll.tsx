@@ -39,6 +39,33 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     };
   }, [reduced]);
 
+  /**
+   * Headings reveal with IntersectionObserver and a CSS class rather than GSAP
+   * writing inline styles across the whole document. A global sweep can touch
+   * nodes React has not hydrated yet, which is exactly how hydration mismatches
+   * happen in the App Router.
+   */
+  useEffect(() => {
+    if (reduced) return;
+    const headings = Array.from(document.querySelectorAll<HTMLElement>(".display")).filter(
+      (el) => !el.closest("[data-hero]") && !el.closest(".page-hero"),
+    );
+    headings.forEach((el) => el.classList.add("will-reveal"));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("revealed");
+          io.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    headings.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [reduced, pathname]);
+
   // new route, new layout: measurements must be recalculated
   useEffect(() => {
     if (reduced) return;

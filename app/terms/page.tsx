@@ -11,7 +11,7 @@ export default function TermsPage() {
   return (
     <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
       <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">Terms of use.</h1>
-      <div className="mt-8 max-w-[74ch] space-y-4 text-[0.96rem] text-steel">
+      <div className="mt-8 max-w-[74ch] space-y-4 text-[0.96rem] text-muted">
         <p>These terms cover use of this website. They are not the contract for a project, which is issued separately as a written scope and signed before work begins.</p>
 
         <h2 className="display pt-6 text-[clamp(1.2rem,1.7vw,1.45rem)]">The content here</h2>

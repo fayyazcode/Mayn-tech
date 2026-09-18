@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Section, SectionHead } from "@/components/ui/Section";
+import { PageHero } from "@/components/sections/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { Cta } from "@/components/sections/Cta";
 import { firstTenDays } from "@/lib/content";
 import { site } from "@/lib/site";
@@ -38,44 +40,41 @@ const wrongFit = [
 export default function AboutPage() {
   return (
     <>
-      <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
-        <SectionHead title={<>A studio built<br />around your<br />point of contact.</>}>
-          <p className="max-w-[60ch] text-steel">
-            Mayn Technologies LLC is a design and marketing studio working out of {site.address.locality}, Illinois,
-            with clients across the United States and beyond. The structure is deliberately flat: one contact who
-            knows your project, and specialists who spend their time on the work rather than in meetings.
-          </p>
-        </SectionHead>
-      </Section>
+      <PageHero
+        eyebrow="About the studio"
+        lines={["A studio built", "around your", "point of contact."]}
+        intro="Mayn Technologies LLC is a design and marketing studio in Downers Grove, Illinois, working with clients across the United States and beyond. The structure is deliberately flat: one contact who knows your project, and specialists who spend their time on the work rather than in meetings."
+        meta={[{ label: "Services", value: "Five" }, { label: "Based in", value: "Illinois" }, { label: "Working", value: "Worldwide" }]}
+      />
 
       <Section id="story">
         <SectionHead title={<>Who you will<br />be working with.</>}>
-          <p className="text-steel">
+          <p className="text-muted">
             Every project is assigned a single point of contact who stays with you from the first call to the
             handover. They know your file, answer your emails, and sit on every review, so you are never repeating
             yourself to someone new.
           </p>
-          <p className="mt-4 text-steel">
+          <p className="mt-4 text-muted">
             Behind them is the team that does the work: designers, developers, and the people running search and
             social. You never have to chase them individually, and nothing is quietly passed to whoever happens to be
             free that week.
           </p>
         </SectionHead>
 
-        <ul className="mt-[clamp(38px,5vw,64px)] grid border-t border-hair lg:grid-cols-3">
+        <ul className="mt-[clamp(38px,5vw,64px)] grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {team.map((t, i) => (
-            <Reveal as="li" key={t.h} delay={i * 0.06} className="h-full border-b border-hairsoft py-7 pr-7 lg:border-b-0 lg:border-r lg:last:border-r-0">
-              <h3 className="text-[1rem] font-medium text-bright">{t.h}</h3>
-              <p className="mt-2 text-[0.9rem] text-steel">{t.p}</p>
+            <Reveal as="li" key={t.h} delay={i * 0.06} className="h-full min-w-0 border-b border-linesoft py-7 sm:px-5 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+              <h3 className="text-[1rem] font-medium text-ink">{t.h}</h3>
+              <p className="mt-2 text-[0.9rem] text-muted">{t.p}</p>
             </Reveal>
           ))}
         </ul>
 
-        <ul className="mt-[clamp(48px,6vw,86px)] grid border-t border-hair lg:grid-cols-3">
+        <ul className="mt-[clamp(48px,6vw,86px)] grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {tenets.map((t, i) => (
-            <Reveal as="li" key={t.h} delay={i * 0.06} className="h-full border-b border-hairsoft py-7 pr-7 lg:border-b-0 lg:border-r lg:last:border-r-0">
-                <h3 className="text-[1rem] font-medium text-bright">{t.h}</h3>
-                <p className="mt-2 text-[0.9rem] text-steel">{t.p}</p>
+            <Reveal as="li" key={t.h} delay={i * 0.06} className="h-full min-w-0 border-b border-linesoft py-7 sm:px-5 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+                <h3 className="text-[1rem] font-medium text-ink">{t.h}</h3>
+                <p className="mt-2 text-[0.9rem] text-muted">{t.p}</p>
               </Reveal>
           ))}
         </ul>
@@ -83,17 +82,17 @@ export default function AboutPage() {
 
       <Section id="process">
         <SectionHead title={<>Four stages,<br />no surprises.</>}>
-          <p className="max-w-[60ch] text-steel">
+          <p className="max-w-[60ch] text-muted">
             Every project runs the same route. You know what happens next, what it costs, and when it lands, before we
             start drawing.
           </p>
         </SectionHead>
-        <ol className="mt-[clamp(38px,5vw,64px)] grid border-t border-hair sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-[clamp(38px,5vw,64px)] grid border-t border-line sm:grid-cols-2 lg:grid-cols-4">
           {firstTenDays.map((stage) => (
-            <li key={stage.n} className="border-b border-hairsoft py-7 pr-7 lg:border-b-0 lg:border-r lg:last:border-r-0">
-              <span className="block font-[family-name:var(--font-bodoni)] text-[1.6rem] leading-none text-champagne">{stage.n}</span>
-              <h3 className="mt-3.5 text-[1rem] font-medium text-bright">{stage.title}</h3>
-              <p className="mt-2 text-[0.9rem] text-steel">{stage.body}</p>
+            <li key={stage.n} className="h-full min-w-0 border-b border-linesoft py-7 sm:px-5 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+              <span className="block font-[family-name:var(--font-bodoni)] text-[1.6rem] leading-none text-accent">{stage.n}</span>
+              <h3 className="mt-3.5 text-[1rem] font-medium text-ink">{stage.title}</h3>
+              <p className="mt-2 text-[0.9rem] text-muted">{stage.body}</p>
             </li>
           ))}
         </ol>
@@ -101,7 +100,7 @@ export default function AboutPage() {
 
       <Section id="engagements">
         <SectionHead title={<>Three ways<br />to work together.</>}>
-          <p className="max-w-[60ch] text-steel">
+          <p className="max-w-[60ch] text-muted">
             Most clients start with a project and move to a retainer once the site is live. You are never asked to
             commit to the second to get the first.
           </p>
@@ -109,11 +108,11 @@ export default function AboutPage() {
         <div className="mt-[clamp(38px,5vw,60px)] grid gap-[clamp(16px,2vw,26px)] lg:grid-cols-3">
           {engagements.map((e, i) => (
             <Reveal key={e.h} delay={i * 0.06}>
-              <article className="flex h-full flex-col gap-3 rounded border border-hair p-[clamp(24px,2.6vw,34px)]">
-                <h3 className="text-[1.05rem] font-medium text-bright">{e.h}</h3>
-                <p className="text-[0.92rem] text-steel">{e.p}</p>
-                <p className="mt-auto border-t border-hairsoft pt-4 text-[0.84rem] text-silver">{e.fit}</p>
-              </article>
+              <SpotlightCard as="article" tilt className="h-full">
+                <h3 className="text-[1.05rem] font-medium text-ink">{e.h}</h3>
+                <p className="text-[0.92rem] text-muted">{e.p}</p>
+                <p className="mt-auto border-t border-linesoft pt-4 text-[0.84rem] text-body">{e.fit}</p>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>
@@ -121,7 +120,7 @@ export default function AboutPage() {
 
       <Section>
         <SectionHead title={<>When we are<br />the wrong studio.</>}>
-          <p className="max-w-[60ch] text-steel">
+          <p className="max-w-[60ch] text-muted">
             Three situations where hiring us wastes your money. Saying so now costs us a few enquiries and saves
             everyone a bad month.
           </p>
@@ -129,11 +128,11 @@ export default function AboutPage() {
         <div className="mt-[clamp(38px,5vw,60px)] grid gap-[clamp(16px,2vw,26px)] lg:grid-cols-3">
           {wrongFit.map((e, i) => (
             <Reveal key={e.h} delay={i * 0.06}>
-              <article className="flex h-full flex-col gap-3 rounded border border-hair p-[clamp(24px,2.6vw,34px)]">
-                <h3 className="text-[1.05rem] font-medium text-bright">{e.h}</h3>
-                <p className="text-[0.92rem] text-steel">{e.p}</p>
-                <p className="mt-auto border-t border-hairsoft pt-4 text-[0.84rem] text-silver">{e.alt}</p>
-              </article>
+              <SpotlightCard as="article" tilt className="h-full">
+                <h3 className="text-[1.05rem] font-medium text-ink">{e.h}</h3>
+                <p className="text-[0.92rem] text-muted">{e.p}</p>
+                <p className="mt-auto border-t border-linesoft pt-4 text-[0.84rem] text-body">{e.alt}</p>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

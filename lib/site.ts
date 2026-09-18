@@ -52,3 +52,13 @@ export const organisationSchema = {
   openingHours: "Mo-Fr 09:00-18:00",
   sameAs: site.social.map((s) => s.href),
 };
+
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.shortName,
+  url: site.url,
+  publisher: { "@type": "Organization", name: site.name },
+  inLanguage: "en-US",
+};

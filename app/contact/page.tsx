@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Section, SectionHead } from "@/components/ui/Section";
+import { PageHero } from "@/components/sections/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Faq } from "@/components/sections/Faq";
 import { Reveal } from "@/components/ui/Reveal";
@@ -33,44 +34,43 @@ export default function ContactPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
-        <div className="grid items-start gap-[clamp(28px,5vw,84px)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
-          <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">Tell us what<br />you are building.</h1>
-          <p className="max-w-[60ch] text-steel">
-            Send a few lines about the business and where you are stuck. You get a reply within one business day, from
-            the person who would do the work.
-          </p>
-        </div>
+      <PageHero
+        eyebrow="Start a project"
+        lines={["Tell us what", "you are building."]}
+        intro="Send a few lines about the business and where you are stuck. You get a reply within one business day, from the person who would do the work."
+        meta={[{ label: "Reply within", value: "1 business day" }, { label: "Call us", value: "(224) 800-1175" }, { label: "Obligation", value: "None" }]}
+      />
 
-        <div className="mt-[clamp(34px,4vw,56px)] grid items-start gap-[clamp(32px,5vw,84px)] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <Section rule={false} className="pt-[clamp(28px,4vw,48px)]">
+        <div className="mt-[clamp(34px,4vw,56px)] grid items-start gap-x-[clamp(32px,5vw,84px)] gap-y-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <ContactForm />
 
           <div>
             <ul>
-              <li className="border-b border-hairsoft py-4.5">
-                <span className="block text-[0.8rem] text-steel">Email</span>
-                <a href={`mailto:${site.email}`} className="mt-1 block text-[1.02rem] text-bright hover:text-champagne">{site.email}</a>
+              <li className="min-w-0 border-b border-linesoft py-4">
+                <span className="block text-[0.8rem] text-muted">Email</span>
+                <a href={`mailto:${site.email}`} className="mt-1 block break-all text-[clamp(0.95rem,2.4vw,1.02rem)] text-ink hover:text-accent">{site.email}</a>
               </li>
-              <li className="border-b border-hairsoft py-4.5">
-                <span className="block text-[0.8rem] text-steel">Phone and WhatsApp</span>
-                <a href={site.phoneHref} className="mt-1 block text-[1.02rem] text-bright hover:text-champagne">{site.phone}</a>
+              <li className="min-w-0 border-b border-linesoft py-4">
+                <span className="block text-[0.8rem] text-muted">Phone and WhatsApp</span>
+                <a href={site.phoneHref} className="mt-1 block text-[1.02rem] text-ink hover:text-accent">{site.phone}</a>
               </li>
-              <li className="border-b border-hairsoft py-4.5">
-                <span className="block text-[0.8rem] text-steel">Office</span>
-                <address className="mt-1 block text-[1.02rem] not-italic text-bright">
+              <li className="min-w-0 border-b border-linesoft py-4">
+                <span className="block text-[0.8rem] text-muted">Office</span>
+                <address className="mt-1 block text-[1.02rem] not-italic text-ink">
                   {site.name}<br />{site.address.street}<br />
                   {site.address.locality}, {site.address.region} {site.address.postalCode}
                 </address>
               </li>
-              <li className="border-b border-hairsoft py-4.5">
-                <span className="block text-[0.8rem] text-steel">Hours</span>
-                <span className="mt-1 block text-[1.02rem] text-bright">Monday to Friday, 9am to 6pm</span>
+              <li className="min-w-0 border-b border-linesoft py-4">
+                <span className="block text-[0.8rem] text-muted">Hours</span>
+                <span className="mt-1 block text-[1.02rem] text-ink">Monday to Friday, 9am to 6pm</span>
               </li>
             </ul>
             <a href={site.maps} target="_blank" rel="noopener noreferrer"
-               className="mt-5 block rounded border border-hair px-6 py-5 transition-colors hover:border-silver hover:bg-white/[0.045]">
-              <span className="block text-[0.8rem] text-steel">Open in Google Maps</span>
-              <span className="mt-1.5 block text-bright">{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</span>
+               className="glass mt-5 block !py-5">
+              <span className="block text-[0.8rem] text-muted">Open in Google Maps</span>
+              <span className="mt-1.5 block text-ink">{site.address.street}, {site.address.locality}, {site.address.region} {site.address.postalCode}</span>
             </a>
           </div>
         </div>
@@ -78,16 +78,16 @@ export default function ContactPage() {
 
       <Section>
         <SectionHead title={<>What happens<br />after you send it.</>}>
-          <p className="max-w-[60ch] text-steel">
+          <p className="max-w-[60ch] text-muted">
             No automated sequence, no sales call disguised as a discovery session, and nobody added to a mailing list.
           </p>
         </SectionHead>
-        <ol className="mt-[clamp(38px,5vw,64px)] grid border-t border-hair lg:grid-cols-3">
+        <ol className="mt-[clamp(38px,5vw,64px)] grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {next.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 0.06} className="h-full border-b border-hairsoft py-7 pr-7 lg:border-b-0 lg:border-r lg:last:border-r-0">
-                <span className="block font-[family-name:var(--font-bodoni)] text-[1.6rem] leading-none text-champagne">{s.n}</span>
-                <h3 className="mt-3.5 text-[1rem] font-medium text-bright">{s.h}</h3>
-                <p className="mt-2 text-[0.9rem] text-steel">{s.p}</p>
+            <Reveal as="li" key={s.n} delay={i * 0.06} className="h-full min-w-0 border-b border-linesoft py-7 sm:px-5 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0 lg:px-6 lg:first:pl-0 lg:last:pr-0">
+                <span className="block font-[family-name:var(--font-bodoni)] text-[1.6rem] leading-none text-accent">{s.n}</span>
+                <h3 className="mt-3.5 text-[1rem] font-medium text-ink">{s.h}</h3>
+                <p className="mt-2 text-[0.9rem] text-muted">{s.p}</p>
               </Reveal>
           ))}
         </ol>
@@ -95,7 +95,7 @@ export default function ContactPage() {
 
       <Section id="faq">
         <SectionHead title={<>Questions we<br />get asked first.</>}>
-          <p className="max-w-[60ch] text-steel">
+          <p className="max-w-[60ch] text-muted">
             If yours is not here, ask it in the form above and you will get a straight answer rather than a brochure.
           </p>
         </SectionHead>

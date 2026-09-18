@@ -12,7 +12,7 @@ export default function PrivacyPage() {
   return (
     <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
       <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">Privacy policy.</h1>
-      <div className="mt-8 max-w-[74ch] space-y-4 text-[0.96rem] text-steel">
+      <div className="mt-8 max-w-[74ch] space-y-4 text-[0.96rem] text-muted">
         <p>This policy explains what {site.name} collects when you use this website, why, and what you can ask us to do about it.</p>
 
         <h2 className="display pt-6 text-[clamp(1.2rem,1.7vw,1.45rem)]">What we collect</h2>

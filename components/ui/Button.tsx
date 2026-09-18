@@ -5,8 +5,8 @@ const base =
   "inline-flex items-center justify-center rounded-full border text-[0.95rem] font-medium px-7 py-3.5 transition-[transform,background-color,color,border-color] duration-250 hover:-translate-y-0.5";
 
 const variants = {
-  solid: "bg-bright text-void border-transparent hover:bg-silver",
-  ghost: "border-hair text-silver hover:border-silver hover:text-bright",
+  solid: "bg-ink text-surface border-transparent hover:bg-body",
+  ghost: "border-line text-body hover:border-body hover:text-ink",
 } as const;
 
 type Variant = keyof typeof variants;
@@ -38,12 +38,20 @@ export function Button({
   );
 }
 
-export function SubmitButton({ children, disabled }: { children: ReactNode; disabled?: boolean }) {
+export function SubmitButton({
+  children,
+  disabled,
+  className = "",
+}: {
+  children: ReactNode;
+  disabled?: boolean;
+  className?: string;
+}) {
   return (
     <button
       type="submit"
       disabled={disabled}
-      className={`${base} ${variants.solid} disabled:opacity-60 disabled:translate-y-0 disabled:cursor-not-allowed`}
+      className={`${base} ${variants.solid} disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
     >
       {children}
     </button>
