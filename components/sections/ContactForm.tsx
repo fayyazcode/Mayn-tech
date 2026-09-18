@@ -35,7 +35,7 @@ export function ContactForm() {
     } catch {
       setState({
         status: "error",
-        message: "No connection to the server. Please email hello@mayntechnologies.com or call (224) 800-1175.",
+        message: "No connection to the server. Please email support@mayntechnologiesllc.com or call (224) 800-1175.",
       });
     }
   }

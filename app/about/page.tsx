@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Section, SectionHead } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Cta } from "@/components/sections/Cta";
@@ -8,12 +7,18 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About — a small design and marketing studio",
-  description: "A small studio with senior hands on every file. How we work, what we stand by, and the three ways to engage us.",
+  description: "A studio built around one point of contact and a specialist team behind them. How we work, what we stand by, and the three ways to engage us.",
   alternates: { canonical: "/about" },
 };
 
+const team = [
+  { h: "Your point of contact", p: "One person who owns the relationship: scheduling, questions, revisions and reporting. Reachable on the studio line during working hours." },
+  { h: "The design and build team", p: "Designers and developers who only work on the craft. Their time goes into your identity and your site rather than into meetings." },
+  { h: "The search and social team", p: "Campaign and content specialists who take over once the site is live, reporting monthly against enquiries." },
+];
+
 const tenets = [
-  { h: "One team from mark to launch", p: "The identity, the website and the campaigns are drawn by the same hands, so nothing drifts out of alignment six months later." },
+  { h: "One team from mark to launch", p: "The identity, the website and the campaigns are handled by the same studio, so nothing drifts out of alignment six months later." },
   { h: "Built to be handed over", p: "You own the files, the domain and every account we open. We document what we build, so you are never locked in to us." },
   { h: "Measured against enquiries", p: "Reporting follows the numbers that move revenue: calls, forms and bookings. Reach and impressions are context, not the result." },
 ];
@@ -34,43 +39,37 @@ export default function AboutPage() {
   return (
     <>
       <Section rule={false} className="pt-[clamp(130px,15vh,190px)]">
-        <SectionHead title={<>A small studio,<br />with senior hands<br />on every file.</>}>
+        <SectionHead title={<>A studio built<br />around your<br />point of contact.</>}>
           <p className="max-w-[60ch] text-steel">
             Mayn Technologies LLC is a design and marketing studio working out of {site.address.locality}, Illinois,
-            with clients across the United States and beyond. We are deliberately small, because the quality of this
-            work depends on who actually does it.
+            with clients across the United States and beyond. The structure is deliberately flat: one contact who
+            knows your project, and specialists who spend their time on the work rather than in meetings.
           </p>
         </SectionHead>
       </Section>
 
       <Section id="story">
-        <SectionHead title={<>Who you will<br />actually be talking to.</>}>
+        <SectionHead title={<>Who you will<br />be working with.</>}>
           <p className="text-steel">
-            {/* REPLACE: founder name and one line of background. */}
-            [YOUR NAME], founder. I take every first call, draw the first directions, and stay on the project until it
-            launches.
+            Every project is assigned a single point of contact who stays with you from the first call to the
+            handover. They know your file, answer your emails, and sit on every review, so you are never repeating
+            yourself to someone new.
           </p>
           <p className="mt-4 text-steel">
-            The studio is small because I have seen the alternative: a senior designer wins the pitch, then the file
-            quietly moves to whoever is free. If you hire us, the work is done by the person you met.
+            Behind them is the team that does the work: designers, developers, and the people running search and
+            social. You never have to chase them individually, and nothing is quietly passed to whoever happens to be
+            free that week.
           </p>
         </SectionHead>
-        <div className="mt-10 grid items-start gap-[clamp(28px,5vw,72px)] lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)]">
-          {/* REPLACE with a real photograph at /public/assets/founder.jpg */}
-          <div className="flex aspect-[4/5] items-center justify-center rounded border border-hairsoft bg-gradient-to-br from-white/[0.08] to-white/[0.015] p-[14%]">
-            <Image src="/assets/mark.png" alt="" width={438} height={320} className="w-full max-w-[210px]" />
-          </div>
-          <ul className="border-t border-hairsoft">
-            <li className="border-b border-hairsoft py-4">
-              <span className="block text-[0.8rem] text-steel">Direct line</span>
-              <a href={site.phoneHref} className="mt-1 block text-[1.02rem] text-bright hover:text-champagne">{site.phone}</a>
-            </li>
-            <li className="border-b border-hairsoft py-4">
-              <span className="block text-[0.8rem] text-steel">Email</span>
-              <a href={`mailto:${site.email}`} className="mt-1 block text-[1.02rem] text-bright hover:text-champagne">{site.email}</a>
-            </li>
-          </ul>
-        </div>
+
+        <ul className="mt-[clamp(38px,5vw,64px)] grid border-t border-hair lg:grid-cols-3">
+          {team.map((t, i) => (
+            <Reveal as="li" key={t.h} delay={i * 0.06} className="h-full border-b border-hairsoft py-7 pr-7 lg:border-b-0 lg:border-r lg:last:border-r-0">
+              <h3 className="text-[1rem] font-medium text-bright">{t.h}</h3>
+              <p className="mt-2 text-[0.9rem] text-steel">{t.p}</p>
+            </Reveal>
+          ))}
+        </ul>
 
         <ul className="mt-[clamp(48px,6vw,86px)] grid border-t border-hair lg:grid-cols-3">
           {tenets.map((t, i) => (

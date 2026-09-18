@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact — Downers Grove, Illinois",
-  description: "Start a project with Mayn Technologies. Call (224) 800-1175, email hello@mayntechnologies.com, or visit 2958 Finley Road, Downers Grove, IL 60515.",
+  description: "Start a project with Mayn Technologies. Call (224) 800-1175, email support@mayntechnologiesllc.com, or visit 2958 Finley Road, Downers Grove, IL 60515.",
   alternates: { canonical: "/contact" },
 };
 

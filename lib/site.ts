@@ -1,10 +1,10 @@
 export const site = {
   name: "Mayn Technologies LLC",
   shortName: "Mayn Technologies",
-  url: "https://mayntechnologies.com",
+  url: "https://mayntechnologiesllc.com",
   description:
     "A design and marketing studio. We draw the logo, build the site, and run the search and social work that keeps people arriving long after launch.",
-  email: "hello@mayntechnologies.com",
+  email: "support@mayntechnologiesllc.com",
   phone: "(224) 800-1175",
   phoneHref: "tel:+12248001175",
   booking: "https://calendly.com/mayntechnologies/intro-call",

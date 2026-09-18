@@ -112,7 +112,7 @@ export const projects: Project[] = [
 ];
 
 export const firstTenDays: Stage[] = [
-  { n: "01", title: "Day one", body: "A thirty-minute call. What the business does, who buys from it, and what is not working. No deck, no pitch, no junior taking notes." },
+  { n: "01", title: "Day one", body: "A thirty-minute call with your point of contact. What the business does, who buys from it, and what is not working. No deck and no pitch." },
   { n: "02", title: "Day two", body: "A written scope in your inbox: what we will make, the fixed price, and the delivery dates. If it is not right, say no and you owe nothing." },
   { n: "03", title: "Day five", body: "First directions to react to. Real work on real content, not mood boards borrowed from other people's brands." },
   { n: "04", title: "Day ten", body: "The direction you chose, refined and applied across the pieces you will actually use. Revisions start from here." },

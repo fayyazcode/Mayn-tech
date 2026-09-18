@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Enquiry failed", error);
     return NextResponse.json(
-      { ok: false, message: "Something broke on our side. Please email hello@mayntechnologies.com or call (224) 800-1175." },
+      { ok: false, message: "Something broke on our side. Please email support@mayntechnologiesllc.com or call (224) 800-1175." },
       { status: 500 },
     );
   }

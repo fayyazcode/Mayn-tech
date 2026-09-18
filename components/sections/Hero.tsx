@@ -61,12 +61,19 @@ export function Hero() {
       <div className="shell">
         <div className="mt-[clamp(26px,4vw,46px)] border-t border-hair pt-[clamp(26px,3.4vw,40px)]">
           <div className="grid items-start gap-[clamp(28px,5vw,80px)] lg:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)]">
-            <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">
-              <span className="block overflow-hidden"><span data-hero-line className="block">A fixed price in two days.</span></span>
-              <span className="block overflow-hidden">
-                <span data-hero-line className="block">Work you can see in <em className="italic">five</em>.</span>
-              </span>
-            </h1>
+            <div>
+              <h1 className="display text-[clamp(2.1rem,4.55vw,3.5rem)]">
+                <span className="block overflow-hidden">
+                  <span data-hero-line className="block">Reach the heights of your business</span>
+                </span>
+                <span className="block overflow-hidden">
+                  <span data-hero-line className="block">with our <em className="italic">expertise</em>.</span>
+                </span>
+              </h1>
+              <p data-hero-sub className="mt-6 text-[clamp(1.02rem,1.25vw,1.18rem)] text-silver">
+                A fixed price in two days. Work you can see in five.
+              </p>
+            </div>
             <div>
               <p data-hero-sub className="max-w-[44ch] text-[clamp(1rem,1.1vw,1.08rem)] text-steel">
                 Mayn Technologies is a design and marketing studio. We draw the logo, build the site, and run the

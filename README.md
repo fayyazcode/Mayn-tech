@@ -89,6 +89,26 @@ browser extensions. It does not hide mismatches in our own markup.
 - Social handles and the Calendly link in `lib/site.ts`
 - `RESEND_API_KEY` in `.env` if you want email forwarding
 
+## Database troubleshooting
+
+Visit **`/api/health/db`** on the deployed site. It reports whether the database is
+reachable, which configuration source it used, and a specific hint when it fails.
+It returns no credentials, so it is safe to open in a browser.
+
+Common causes, in the order they usually bite:
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `No database configuration found` | Env vars named differently, or not loaded into the Node process | Names must match exactly. Restart the app after saving — most panels do not hot-reload env vars |
+| `querySrv ENOTFOUND` / `ESERVFAIL` | Host blocks SRV DNS lookups, which `mongodb+srv://` requires | Use the non-SRV string: Atlas → Connect → Drivers → "Node.js 2.2.12 or earlier" |
+| `Server selection timed out` | Atlas is refusing the host's IP, or port 27017 is blocked outbound | Add `0.0.0.0/0` in Atlas → Network Access. Then confirm the host permits outbound 27017 |
+| `Authentication failed` | Wrong user, or special characters in the password | The app URL-encodes `DB_PASS`. If using `MONGODB_URI`, encode it yourself |
+| Works locally, fails deployed | Your home IP is allowlisted, the server's is not | Same fix: `0.0.0.0/0` |
+
+Shared Node hosting frequently blocks outbound database ports altogether. If the
+health endpoint reports a timeout and Atlas shows `0.0.0.0/0`, the host is the
+problem and no code change will solve it.
+
 ## Hosting
 
 This is a Node application. It will **not** run on cPanel shared hosting.
